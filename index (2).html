@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para Johanita</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; min-height: 100%; font-family: Arial, Helvetica, sans-serif; }
+    body {
+      background: radial-gradient(circle at top, #0f172a 0%, #172554 28%, #1d4ed8 62%, #60a5fa 100%);
+      overflow-x: hidden;
+      color: #fff;
+    }
+
+    .sky-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 12%, rgba(255,255,255,0.16), transparent 22%),
+        radial-gradient(circle at 86% 14%, rgba(255,255,255,0.10), transparent 24%),
+        radial-gradient(circle at 50% 100%, rgba(255,255,255,0.08), transparent 28%);
+    }
+
+    .moon {
+      position: fixed;
+      top: 38px;
+      right: 46px;
+      font-size: 58px;
+      filter: drop-shadow(0 0 12px rgba(255,255,255,0.25));
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: fixed;
+      color: #fde68a;
+      animation: twinkle 2.8s infinite ease-in-out;
+      pointer-events: none;
+      z-index: 0;
+      text-shadow: 0 0 12px rgba(255,255,255,0.25);
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.35; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.18); }
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 14px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 940px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.22);
+      box-shadow: 0 24px 80px rgba(15,23,42,0.28);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 28px 18px 32px;
+      text-align: center;
+    }
+
+    .line {
+      width: 88px;
+      height: 2px;
+      background: rgba(255,255,255,0.70);
+      margin: 0 auto 18px;
+      border-radius: 999px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 7vw, 64px);
+      line-height: 1.05;
+      text-shadow: 0 2px 10px rgba(15,23,42,0.18);
+    }
+
+    .love-text {
+      margin: 18px auto 0;
+      max-width: 760px;
+      font-size: clamp(22px, 4.2vw, 34px);
+      font-weight: 800;
+      color: #ffffff;
+      text-shadow: 0 2px 12px rgba(15,23,42,0.20);
+    }
+
+    .subtitle {
+      margin-top: 12px;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.82);
+    }
+
+    .hero-box {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .small-text {
+      margin-bottom: 18px;
+      font-size: 19px;
+      color: rgba(255,255,255,0.92);
+    }
+
+    button {
+      border: 0;
+      border-radius: 18px;
+      padding: 14px 28px;
+      font-size: 20px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, opacity 0.18s ease;
+    }
+
+    button:active { transform: scale(0.97); }
+
+    .btn-open, .btn-yes {
+      background: #ffffff;
+      color: #1d4ed8;
+      box-shadow: 0 14px 30px rgba(15,23,42,0.18);
+    }
+
+    .question-box {
+      margin-top: 34px;
+      padding: 24px 16px 28px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.24);
+    }
+
+    .question-box h2, .bouquet-title {
+      margin: 0;
+      font-size: clamp(26px, 4.5vw, 42px);
+      line-height: 1.15;
+    }
+
+    .buttons {
+      position: relative;
+      min-height: 170px;
+      margin-top: 24px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.20);
+      background: rgba(255,255,255,0.09);
+      overflow: hidden;
+    }
+
+    .buttons-inner {
+      position: relative;
+      width: 100%;
+      min-height: 170px;
+    }
+
+    .btn-yes {
+      position: absolute;
+      left: calc(50% - 110px);
+      top: 58px;
+      min-width: 100px;
+    }
+
+    .btn-no {
+      position: absolute;
+      left: calc(50% + 14px);
+      top: 58px;
+      min-width: 100px;
+      background: rgba(15,23,42,0.86);
+      color: white;
+      box-shadow: 0 12px 28px rgba(15,23,42,0.22);
+      transform-origin: center center;
+    }
+
+    .hidden { display: none !important; }
+
+    .bouquet-area {
+      margin-top: 28px;
+    }
+
+    .bouquet-note {
+      margin-top: 12px;
+      font-size: 18px;
+      color: rgba(255,255,255,0.87);
+    }
+
+    .bouquet-box {
+      width: 100%;
+      max-width: 480px;
+      margin: 18px auto 0;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+
+    .piece {
+      opacity: 0;
+      transform-box: fill-box;
+      transform-origin: center center;
+    }
+
+    .piece.show {
+      animation: bloom 0.65s ease forwards;
+    }
+
+    @keyframes bloom {
+      0% { opacity: 0; transform: translateY(14px) scale(0.65); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .final-message {
+      margin: 18px auto 0;
+      max-width: 760px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.20);
+      padding: 16px 18px;
+    }
+
+    .final-message .big {
+      font-size: clamp(22px, 4vw, 34px);
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .final-message .small {
+      margin-top: 8px;
+      font-size: 16px;
+      color: rgba(255,255,255,0.88);
+    }
+
+    @media (max-width: 680px) {
+      .card { padding: 24px 12px 26px; }
+      .btn-yes { left: calc(50% - 95px); }
+      .btn-no { left: calc(50% + 6px); }
+      .moon { font-size: 44px; right: 18px; top: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sky-glow"></div>
+  <div class="moon">🌙</div>
+
+  <div class="star" style="left:8%; top:10%; font-size:18px; animation-delay:0s;">✦</div>
+  <div class="star" style="left:16%; top:18%; font-size:10px; animation-delay:.4s;">✦</div>
+  <div class="star" style="left:24%; top:9%; font-size:14px; animation-delay:.8s;">✦</div>
+  <div class="star" style="left:74%; top:12%; font-size:16px; animation-delay:.2s;">✦</div>
+  <div class="star" style="left:82%; top:20%; font-size:10px; animation-delay:.6s;">✦</div>
+  <div class="star" style="left:88%; top:9%; font-size:14px; animation-delay:1s;">✦</div>
+  <div class="star" style="left:12%; top:72%; font-size:10px; animation-delay:.5s;">✦</div>
+  <div class="star" style="left:86%; top:74%; font-size:12px; animation-delay:.9s;">✦</div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="line"></div>
+      <h1>Para Johanita ✨</h1>
+      <div class="love-text">Te quieroooooooooooooooooooooooo Johanaaaaaa 💙✨🌙</div>
+      <div class="subtitle">De Dyland, con mucho cariño, Pibblet</div>
+
+      <div id="startScreen" class="hero-box">
+        <div class="small-text">Abre esta sorpresa bonita ✨</div>
+        <button class="btn-open" id="openBtn">Abrir 🌙</button>
+      </div>
+
+      <div id="questionScreen" class="question-box hidden">
+        <h2>¿Quieres abrir el ramo azul más bonito? ✨</h2>
+        <div class="buttons">
+          <div class="buttons-inner" id="buttonArea">
+            <button class="btn-yes" id="yesBtn">Sí ✨</button>
+            <button class="btn-no" id="noBtn">No</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="bouquetScreen" class="bouquet-area hidden">
+        <div class="bouquet-title">Te quieroooooooooooooooooooooooo Johanaaaaaa ✨🌙</div>
+        <div class="bouquet-note">Un ramito azul hecho con muchísimo cariño.</div>
+
+        <div class="bouquet-box">
+          <svg viewBox="0 0 460 640" aria-label="Ramo de flores azules">
+            <defs>
+              <linearGradient id="stemGrad" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#86efac"></stop>
+                <stop offset="45%" stop-color="#22c55e"></stop>
+                <stop offset="100%" stop-color="#14532d"></stop>
+              </linearGradient>
+              <linearGradient id="wrapLeft" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.97)"></stop>
+                <stop offset="100%" stop-color="rgba(219,234,254,0.80)"></stop>
+              </linearGradient>
+              <linearGradient id="wrapRight" x1="1" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.97)"></stop>
+                <stop offset="100%" stop-color="rgba(191,219,254,0.80)"></stop>
+              </linearGradient>
+              <linearGradient id="ribbon" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#93c5fd"></stop>
+                <stop offset="100%" stop-color="#2563eb"></stop>
+              </linearGradient>
+            </defs>
+
+            <ellipse class="piece" id="p1" cx="230" cy="592" rx="110" ry="22" fill="rgba(15,23,42,0.10)"></ellipse>
+
+            <g class="piece" id="p2">
+              <path d="M170 554 C164 454, 144 314, 150 214" stroke="url(#stemGrad)" stroke-width="5" fill="none" stroke-linecap="round"></path>
+              <path d="M190 554 C184 454, 170 314, 176 170" stroke="url(#stemGrad)" stroke-width="5" fill="none" stroke-linecap="round"></path>
+              <path d="M208 554 C202 454, 200 314, 206 132" stroke="url(#stemGrad)" stroke-width="5" fill="none" stroke-linecap="round"></path>
+              <path d="M226 554 C220 454, 220 314, 226 110" stroke="url(#stemGrad)" stroke-width="5" fill="none" stroke-linecap="round"></path>
+              <path d="M244 554 C250 454, 250 314, 248 132" stroke="url(#stemGrad)" stroke-width="5" fill="none" stroke-linecap="round"></path>
+              <path d="M262 554 C268 454, 280 314, 278 170" stroke="url(#stemGrad)" stroke-width="5" fill="none" stroke-linecap="round"></path>
+              <path d="M280 554 C286 454, 308 314, 304 214" stroke="url(#stemGrad)" stroke-width="5" fill="none" stroke-linecap="round"></path>
+            </g>
+
+            <g class="piece" id="p3">
+              <path d="M108 230 C114 200, 118 178, 118 154" stroke="#166534" stroke-width="4" fill="none"></path>
+              <ellipse cx="118" cy="170" rx="12" ry="17" fill="#334155" transform="rotate(-18 118 170)"></ellipse>
+              <ellipse cx="132" cy="158" rx="12" ry="17" fill="#334155" transform="rotate(18 132 158)"></ellipse>
+              <ellipse cx="116" cy="146" rx="12" ry="17" fill="#334155" transform="rotate(-16 116 146)"></ellipse>
+              <ellipse cx="134" cy="134" rx="12" ry="17" fill="#334155" transform="rotate(20 134 134)"></ellipse>
+              <ellipse cx="120" cy="122" rx="12" ry="17" fill="#334155" transform="rotate(-12 120 122)"></ellipse>
+            </g>
+
+            <g class="piece" id="p4">
+              <path d="M330 224 C332 196, 334 176, 336 148" stroke="#166534" stroke-width="4" fill="none"></path>
+              <ellipse cx="330" cy="162" rx="12" ry="17" fill="#334155" transform="rotate(-18 330 162)"></ellipse>
+              <ellipse cx="344" cy="150" rx="12" ry="17" fill="#334155" transform="rotate(18 344 150)"></ellipse>
+              <ellipse cx="328" cy="138" rx="12" ry="17" fill="#334155" transform="rotate(-16 328 138)"></ellipse>
+              <ellipse cx="346" cy="126" rx="12" ry="17" fill="#334155" transform="rotate(20 346 126)"></ellipse>
+              <ellipse cx="332" cy="114" rx="12" ry="17" fill="#334155" transform="rotate(-12 332 114)"></ellipse>
+            </g>
+
+            <g class="piece" id="p5">
+              <path d="M92 228 C100 208, 106 194, 112 184" stroke="#3f6212" stroke-width="2" fill="none"></path>
+              <circle cx="88" cy="220" r="5" fill="#fff"></circle>
+              <circle cx="98" cy="210" r="4" fill="#fff"></circle>
+              <circle cx="108" cy="202" r="5" fill="#fff"></circle>
+              <circle cx="118" cy="192" r="4" fill="#fff"></circle>
+              <circle cx="128" cy="198" r="5" fill="#fff"></circle>
+              <circle cx="112" cy="214" r="4" fill="#fff"></circle>
+            </g>
+
+            <g class="piece" id="p6">
+              <path d="M308 224 C300 204, 294 190, 286 180" stroke="#3f6212" stroke-width="2" fill="none"></path>
+              <circle cx="304" cy="218" r="5" fill="#fff"></circle>
+              <circle cx="294" cy="208" r="4" fill="#fff"></circle>
+              <circle cx="284" cy="200" r="5" fill="#fff"></circle>
+              <circle cx="274" cy="190" r="4" fill="#fff"></circle>
+              <circle cx="264" cy="198" r="5" fill="#fff"></circle>
+              <circle cx="280" cy="214" r="4" fill="#fff"></circle>
+            </g>
+
+            <g class="piece" id="p7">
+              <g transform="translate(150 204) rotate(-12) scale(.9)">
+                <ellipse cx="0" cy="12" rx="42" ry="14" fill="rgba(15,23,42,0.10)"></ellipse>
+                <ellipse cx="0" cy="-14" rx="14" ry="26" fill="#dbeafe"></ellipse>
+                <ellipse cx="20" cy="-6" rx="14" ry="25" transform="rotate(36 20 -6)" fill="#93c5fd"></ellipse>
+                <ellipse cx="28" cy="16" rx="15" ry="26" transform="rotate(78 28 16)" fill="#60a5fa"></ellipse>
+                <ellipse cx="18" cy="36" rx="14" ry="24" transform="rotate(124 18 36)" fill="#93c5fd"></ellipse>
+                <ellipse cx="0" cy="44" rx="14" ry="24" transform="rotate(180 0 44)" fill="#dbeafe"></ellipse>
+                <ellipse cx="-18" cy="36" rx="14" ry="24" transform="rotate(236 -18 36)" fill="#93c5fd"></ellipse>
+                <ellipse cx="-28" cy="16" rx="15" ry="26" transform="rotate(282 -28 16)" fill="#60a5fa"></ellipse>
+                <ellipse cx="-20" cy="-6" rx="14" ry="25" transform="rotate(324 -20 -6)" fill="#93c5fd"></ellipse>
+                <ellipse cx="0" cy="4" rx="12" ry="20" fill="#f8fbff"></ellipse>
+                <ellipse cx="12" cy="10" rx="11" ry="19" transform="rotate(32 12 10)" fill="#dbeafe"></ellipse>
+                <ellipse cx="16" cy="24" rx="10" ry="18" transform="rotate(76 16 24)" fill="#93c5fd"></ellipse>
+                <ellipse cx="6" cy="34" rx="10" ry="16" transform="rotate(124 6 34)" fill="#dbeafe"></ellipse>
+                <ellipse cx="-6" cy="34" rx="10" ry="16" transform="rotate(236 -6 34)" fill="#f8fbff"></ellipse>
+                <ellipse cx="-16" cy="24" rx="10" ry="18" transform="rotate(284 -16 24)" fill="#93c5fd"></ellipse>
+                <ellipse cx="-12" cy="10" rx="11" ry="19" transform="rotate(328 -12 10)" fill="#dbeafe"></ellipse>
+                <circle cx="0" cy="20" r="7" fill="#93c5fd"></circle>
+              </g>
+            </g>
+
+            <g class="piece" id="p8">
+              <g transform="translate(182 156) rotate(-7) scale(.96)">
+                <ellipse cx="0" cy="12" rx="42" ry="14" fill="rgba(15,23,42,0.10)"></ellipse>
+                <ellipse cx="0" cy="-14" rx="14" ry="26" fill="#f8fafc"></ellipse>
+                <ellipse cx="20" cy="-6" rx="14" ry="25" transform="rotate(36 20 -6)" fill="#e2e8f0"></ellipse>
+                <ellipse cx="28" cy="16" rx="15" ry="26" transform="rotate(78 28 16)" fill="#cbd5e1"></ellipse>
+                <ellipse cx="18" cy="36" rx="14" ry="24" transform="rotate(124 18 36)" fill="#e2e8f0"></ellipse>
+                <ellipse cx="0" cy="44" rx="14" ry="24" transform="rotate(180 0 44)" fill="#f8fafc"></ellipse>
+                <ellipse cx="-18" cy="36" rx="14" ry="24" transform="rotate(236 -18 36)" fill="#e2e8f0"></ellipse>
+                <ellipse cx="-28" cy="16" rx="15" ry="26" transform="rotate(282 -28 16)" fill="#cbd5e1"></ellipse>
+                <ellipse cx="-20" cy="-6" rx="14" ry="25" transform="rotate(324 -20 -6)" fill="#e2e8f0"></ellipse>
+                <ellipse cx="0" cy="4" rx="12" ry="20" fill="#ffffff"></ellipse>
+                <circle cx="0" cy="20" r="7" fill="#e2e8f0"></circle>
+              </g>
+            </g>
+
+            <g class="piece" id="p9">
+              <g transform="translate(230 96) scale(1.16)">
+                <ellipse cx="0" cy="12" rx="42" ry="14" fill="rgba(15,23,42,0.10)"></ellipse>
+                <ellipse cx="0" cy="-14" rx="14" ry="26" fill="#bfdbfe"></ellipse>
+                <ellipse cx="20" cy="-6" rx="14" ry="25" transform="rotate(36 20 -6)" fill="#60a5fa"></ellipse>
+                <ellipse cx="28" cy="16" rx="15" ry="26" transform="rotate(78 28 16)" fill="#2563eb"></ellipse>
+                <ellipse cx="18" cy="36" rx="14" ry="24" transform="rotate(124 18 36)" fill="#60a5fa"></ellipse>
+                <ellipse cx="0" cy="44" rx="14" ry="24" transform="rotate(180 0 44)" fill="#bfdbfe"></ellipse>
+                <ellipse cx="-18" cy="36" rx="14" ry="24" transform="rotate(236 -18 36)" fill="#60a5fa"></ellipse>
+                <ellipse cx="-28" cy="16" rx="15" ry="26" transform="rotate(282 -28 16)" fill="#2563eb"></ellipse>
+                <ellipse cx="-20" cy="-6" rx="14" ry="25" transform="rotate(324 -20 -6)" fill="#60a5fa"></ellipse>
+                <ellipse cx="0" cy="4" rx="12" ry="20" fill="#eff6ff"></ellipse>
+                <circle cx="0" cy="20" r="7" fill="#60a5fa"></circle>
+              </g>
+            </g>
+
+            <g class="piece" id="p10">
+              <g transform="translate(278 156) rotate(7) scale(.96)">
+                <ellipse cx="0" cy="12" rx="42" ry="14" fill="rgba(15,23,42,0.10)"></ellipse>
+                <ellipse cx="0" cy="-14" rx="14" ry="26" fill="#dbeafe"></ellipse>
+                <ellipse cx="20" cy="-6" rx="14" ry="25" transform="rotate(36 20 -6)" fill="#93c5fd"></ellipse>
+                <ellipse cx="28" cy="16" rx="15" ry="26" transform="rotate(78 28 16)" fill="#60a5fa"></ellipse>
+                <ellipse cx="18" cy="36" rx="14" ry="24" transform="rotate(124 18 36)" fill="#93c5fd"></ellipse>
+                <ellipse cx="0" cy="44" rx="14" ry="24" transform="rotate(180 0 44)" fill="#dbeafe"></ellipse>
+                <ellipse cx="-18" cy="36" rx="14" ry="24" transform="rotate(236 -18 36)" fill="#93c5fd"></ellipse>
+                <ellipse cx="-28" cy="16" rx="15" ry="26" transform="rotate(282 -28 16)" fill="#60a5fa"></ellipse>
+                <ellipse cx="-20" cy="-6" rx="14" ry="25" transform="rotate(324 -20 -6)" fill="#93c5fd"></ellipse>
+                <ellipse cx="0" cy="4" rx="12" ry="20" fill="#f8fbff"></ellipse>
+                <circle cx="0" cy="20" r="7" fill="#93c5fd"></circle>
+              </g>
+            </g>
+
+            <g class="piece" id="p11">
+              <g transform="translate(142 284) scale(1.12)">
+                <ellipse cx="0" cy="18" rx="40" ry="24" fill="rgba(15,23,42,0.08)"></ellipse>
+                <ellipse cx="-20" cy="-19" rx="6" ry="8" fill="#fff"></ellipse><ellipse cx="-15" cy="-14" rx="6" ry="8" fill="#f9a8d4"></ellipse><ellipse cx="-20" cy="-9" rx="6" ry="8" fill="#fbcfe8"></ellipse><ellipse cx="-25" cy="-14" rx="6" ry="8" fill="#f9a8d4"></ellipse>
+                <ellipse cx="-5" cy="-25" rx="6" ry="8" fill="#fff"></ellipse><ellipse cx="0" cy="-20" rx="6" ry="8" fill="#f9a8d4"></ellipse><ellipse cx="-5" cy="-15" rx="6" ry="8" fill="#fbcfe8"></ellipse><ellipse cx="-10" cy="-20" rx="6" ry="8" fill="#f9a8d4"></ellipse>
+                <ellipse cx="12" cy="-23" rx="6" ry="8" fill="#fff"></ellipse><ellipse cx="17" cy="-18" rx="6" ry="8" fill="#f9a8d4"></ellipse><ellipse cx="12" cy="-13" rx="6" ry="8" fill="#fbcfe8"></ellipse><ellipse cx="7" cy="-18" rx="6" ry="8" fill="#f9a8d4"></ellipse>
+                <ellipse cx="26" cy="-13" rx="6" ry="8" fill="#fff"></ellipse><ellipse cx="31" cy="-8" rx="6" ry="8" fill="#f9a8d4"></ellipse><ellipse cx="26" cy="-3" rx="6" ry="8" fill="#fbcfe8"></ellipse><ellipse cx="21" cy="-8" rx="6" ry="8" fill="#f9a8d4"></ellipse>
+              </g>
+            </g>
+
+            <g class="piece" id="p12">
+              <g transform="translate(318 280) scale(1.08)">
+                <ellipse cx="0" cy="18" rx="40" ry="24" fill="rgba(15,23,42,0.08)"></ellipse>
+                <ellipse cx="-20" cy="-19" rx="6" ry="8" fill="#fff"></ellipse><ellipse cx="-15" cy="-14" rx="6" ry="8" fill="#60a5fa"></ellipse><ellipse cx="-20" cy="-9" rx="6" ry="8" fill="#dbeafe"></ellipse><ellipse cx="-25" cy="-14" rx="6" ry="8" fill="#60a5fa"></ellipse>
+                <ellipse cx="-5" cy="-25" rx="6" ry="8" fill="#fff"></ellipse><ellipse cx="0" cy="-20" rx="6" ry="8" fill="#60a5fa"></ellipse><ellipse cx="-5" cy="-15" rx="6" ry="8" fill="#dbeafe"></ellipse><ellipse cx="-10" cy="-20" rx="6" ry="8" fill="#60a5fa"></ellipse>
+                <ellipse cx="12" cy="-23" rx="6" ry="8" fill="#fff"></ellipse><ellipse cx="17" cy="-18" rx="6" ry="8" fill="#60a5fa"></ellipse><ellipse cx="12" cy="-13" rx="6" ry="8" fill="#dbeafe"></ellipse><ellipse cx="7" cy="-18" rx="6" ry="8" fill="#60a5fa"></ellipse>
+                <ellipse cx="26" cy="-13" rx="6" ry="8" fill="#fff"></ellipse><ellipse cx="31" cy="-8" rx="6" ry="8" fill="#60a5fa"></ellipse><ellipse cx="26" cy="-3" rx="6" ry="8" fill="#dbeafe"></ellipse><ellipse cx="21" cy="-8" rx="6" ry="8" fill="#60a5fa"></ellipse>
+              </g>
+            </g>
+
+            <g class="piece" id="p13">
+              <path d="M108 330 L212 316 L188 592 L136 592 Z" fill="url(#wrapLeft)" stroke="rgba(255,255,255,0.62)" stroke-width="2"></path>
+              <path d="M352 330 L248 316 L272 592 L324 592 Z" fill="url(#wrapRight)" stroke="rgba(255,255,255,0.62)" stroke-width="2"></path>
+              <path d="M142 314 Q230 296 318 314" fill="none" stroke="rgba(255,255,255,0.56)" stroke-width="3"></path>
+            </g>
+
+            <g class="piece" id="p14">
+              <ellipse cx="230" cy="388" rx="68" ry="30" fill="url(#ribbon)"></ellipse>
+              <path d="M202 386 C218 366, 242 366, 258 386 C242 396, 218 396, 202 386Z" fill="#1d4ed8"></path>
+              <path d="M214 408 L200 500" stroke="#2563eb" stroke-width="14" stroke-linecap="round"></path>
+              <path d="M246 408 L260 500" stroke="#3b82f6" stroke-width="14" stroke-linecap="round"></path>
+            </g>
+
+            <g class="piece" id="p15">
+              <line x1="206" y1="592" x2="201" y2="632" stroke="#7c5e3b" stroke-width="4" stroke-linecap="round"></line>
+              <line x1="216" y1="592" x2="221" y2="632" stroke="#7c5e3b" stroke-width="4" stroke-linecap="round"></line>
+              <line x1="226" y1="592" x2="221" y2="632" stroke="#7c5e3b" stroke-width="4" stroke-linecap="round"></line>
+              <line x1="236" y1="592" x2="241" y2="632" stroke="#7c5e3b" stroke-width="4" stroke-linecap="round"></line>
+              <line x1="246" y1="592" x2="241" y2="632" stroke="#7c5e3b" stroke-width="4" stroke-linecap="round"></line>
+              <line x1="256" y1="592" x2="261" y2="632" stroke="#7c5e3b" stroke-width="4" stroke-linecap="round"></line>
+            </g>
+          </svg>
+        </div>
+
+        <div id="finalMessage" class="final-message hidden">
+          <div class="big">Te quieroooooooooooooooooooooooo Johanaaaaaa ✨💙🌙</div>
+          <div class="small">De Dyland, con mucho cariño, Pibblet.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const openBtn = document.getElementById('openBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const startScreen = document.getElementById('startScreen');
+    const questionScreen = document.getElementById('questionScreen');
+    const bouquetScreen = document.getElementById('bouquetScreen');
+    const finalMessage = document.getElementById('finalMessage');
+    const pieces = Array.from(document.querySelectorAll('.piece'));
+
+    let noScale = 1;
+
+    openBtn.addEventListener('click', function () {
+      startScreen.classList.add('hidden');
+      questionScreen.classList.remove('hidden');
+    });
+
+    function moveNoButton() {
+      const area = document.getElementById('buttonArea');
+      const areaRect = area.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      const maxX = Math.max(10, areaRect.width - btnRect.width - 20);
+      const maxY = Math.max(10, areaRect.height - btnRect.height - 20);
+      const randX = Math.random() * maxX;
+      const randY = Math.random() * maxY;
+
+      noScale = Math.max(0.38, noScale - 0.12);
+      noBtn.style.left = randX + 'px';
+      noBtn.style.top = randY + 'px';
+      noBtn.style.transform = 'scale(' + noScale + ')';
+    }
+
+    noBtn.addEventListener('mouseenter', moveNoButton);
+    noBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      moveNoButton();
+    });
+    noBtn.addEventListener('touchstart', function (e) {
+      e.preventDefault();
+      moveNoButton();
+    }, { passive: false });
+
+    yesBtn.addEventListener('click', function () {
+      questionScreen.classList.add('hidden');
+      bouquetScreen.classList.remove('hidden');
+
+      pieces.forEach(p => p.classList.remove('show'));
+      finalMessage.classList.add('hidden');
+
+      pieces.forEach((piece, index) => {
+        setTimeout(() => {
+          piece.classList.add('show');
+          if (index === pieces.length - 1) {
+            setTimeout(() => finalMessage.classList.remove('hidden'), 300);
+          }
+        }, index * 350);
+      });
+    });
+  </script>
+</body>
+</html>
